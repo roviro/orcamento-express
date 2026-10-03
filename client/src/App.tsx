@@ -13,11 +13,11 @@ export function App() {
   const [providerSettings, setProviderSettings] = useState<Record<string, string>>({});
   const [publicQuoteId, setPublicQuoteId] = useState<string | null>(null);
 
-  // Detecta se a rota atual é de proposta pública (/proposta/:id)
+  // Detecta se a rota atual é de proposta pública (/proposta/:id ou #/proposta/:id)
   useEffect(() => {
     const checkPath = () => {
-      const path = window.location.pathname;
-      const match = path.match(/\/proposta\/([a-zA-Z0-9_-]+)/);
+      const full = window.location.pathname + window.location.hash;
+      const match = full.match(/(?:\/|#)proposta\/([a-zA-Z0-9_-]+)/);
       if (match && match[1]) {
         setPublicQuoteId(match[1]);
       } else {
@@ -27,7 +27,11 @@ export function App() {
 
     checkPath();
     window.addEventListener('popstate', checkPath);
-    return () => window.removeEventListener('popstate', checkPath);
+    window.addEventListener('hashchange', checkPath);
+    return () => {
+      window.removeEventListener('popstate', checkPath);
+      window.removeEventListener('hashchange', checkPath);
+    };
   }, []);
 
   const loadSettings = async () => {
@@ -44,12 +48,12 @@ export function App() {
   }, []);
 
   const handleViewPublicQuote = (id: string) => {
-    window.history.pushState({}, '', `/proposta/${id}`);
+    window.location.hash = `/proposta/${id}`;
     setPublicQuoteId(id);
   };
 
   const handleBackToDashboard = () => {
-    window.history.pushState({}, '', '/');
+    window.location.hash = '';
     setPublicQuoteId(null);
   };
 
@@ -68,6 +72,21 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-[#080c14] text-slate-100 flex flex-col selection:bg-sky-500 selection:text-slate-950">
+      {/* Barra de Demonstração Interativa */}
+      <div className="bg-gradient-to-r from-sky-950/90 via-slate-900 to-indigo-950/90 text-slate-300 text-xs py-2 px-4 border-b border-sky-500/20 flex items-center justify-between z-50">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+          <span className="font-bold text-white text-xs">Modo Demonstração Interativo</span>
+          <span className="hidden sm:inline text-slate-400">• Emissão de Propostas, Assinatura Digital Touch e Sinal PIX ativos</span>
+        </div>
+        <a
+          href="https://roviro.com.br#solucoes"
+          className="text-sky-400 hover:text-sky-300 font-semibold text-xs flex items-center gap-1.5 transition"
+        >
+          <span>← Voltar ao Portfólio Roviro</span>
+        </a>
+      </div>
+
       {/* Top Navigation */}
       <Navbar
         currentTab={currentTab}
