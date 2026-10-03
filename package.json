@@ -1,0 +1,24 @@
+{
+  "name": "orcamento-express-roviro",
+  "version": "1.0.0",
+  "description": "Gerador de Orçamentos Profissionais com Sinal PIX de Entrada e Aprovação no WhatsApp",
+  "private": true,
+  "scripts": {
+    "dev:server": "cd server && bun run dev",
+    "dev:client": "cd client && bun run dev",
+    "build:client": "cd client && bun run build",
+    "build:server": "cd server && bun run build",
+    "build": "bun run build:client && bun run build:server",
+    "start": "cd server && bun run start"
+  },
+  "keywords": [
+    "orcamento",
+    "proposta-comercial",
+    "pix",
+    "sinal",
+    "whatsapp",
+    "roviro",
+    "saas"
+  ],
+  "author": "Roviro"
+}

@@ -1,0 +1,24 @@
+{
+  "name": "orcamento-express-server",
+  "version": "1.0.0",
+  "description": "Backend API para gerador de orçamentos com sinal PIX",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "build": "echo 'No build step required for Bun'"
+  },
+  "dependencies": {
+    "express": "^5.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "zod": "^3.23.8",
+    "axios": "^1.7.9"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/cors": "^2.8.17",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}
